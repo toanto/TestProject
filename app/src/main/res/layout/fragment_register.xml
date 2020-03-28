@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="@string/app_name"
+        android:textColor="#FF0000"
+        android:textSize="50dp" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_edittext"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:drawablePadding="5dp"
+        android:hint="@string/txt_username"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/editTextPass"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_edittext"
+        android:drawableLeft="@drawable/ic_security_black_24dp"
+        android:drawablePadding="5dp"
+        android:hint="@string/txt_password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editTextConfirmPass"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_edittext"
+        android:drawableLeft="@drawable/ic_security_black_24dp"
+        android:drawablePadding="5dp"
+        android:hint="@string/txt_confirm_password"
+        android:inputType="textPassword" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp">
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/custom_button_login"
+            android:text="@string/txt_register"
+            android:textColor="#FFFF00"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/custom_button_login"
+            android:text="@string/txt_back"
+            android:textColor="#FFFF00"
+            android:textSize="20dp" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

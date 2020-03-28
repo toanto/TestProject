@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ManyLanguage</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_username">Username</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_telephone_number">Telephone Number</string>
+    <string name="txt_hello">Hello</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="remember_information">Remember Information</string>
+    <string name="txt_register">Register</string>
+    <string name="txt_back">Back</string>
+    <string name="txt_confirm_password">Confirm Password</string>
+    <string name="txt_forgot_your_password">Forgot Your Password?</string>
+    <string name="txt_don_t_have_an_account">Don\'t have an account:</string>
+    <string name="txt_register_here">Register here!</string>
+    <string name="txt_ok">OK</string>
+    <string name="txt_dang_ky_thanh_cong">Register Succesful!</string>
+    <string name="txt_check_null">Information is null</string>
+    <string name="txt_wrong_password">Wrong Password!</string>
+</resources>
