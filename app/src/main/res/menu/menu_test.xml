@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/itemMenuVi"
-        android:icon="@drawable/vi"
+        android:icon="@drawable/img_vi"
         android:title="Vietnamese" />
 
     <item
         android:id="@+id/itemMenuEn"
-        android:icon="@drawable/en"
+        android:icon="@drawable/img_en"
         android:title="English" />
 
 </menu>

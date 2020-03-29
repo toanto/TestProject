@@ -1,6 +1,8 @@
 package gst.trainingcourse.manylanguage.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,9 +30,8 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        return view;
+        return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     @Override
@@ -45,10 +46,10 @@ public class RegisterFragment extends Fragment {
     private void setLanguage() {
         LoginFragment loginFragment = (LoginFragment) getFragmentManager().findFragmentByTag("loginFragment");
         if (loginFragment != null) {
-            if (loginFragment.passLanguage() == "vi") {
-                LocaleHelper.setLocale(getContext(), "vi");
-            } else if (loginFragment.passLanguage() == "en") {
-                LocaleHelper.setLocale(getContext(), "en");
+            if (loginFragment.passLanguage() == "img_vi") {
+                LocaleHelper.setLocale(getContext(), "img_vi");
+            } else if (loginFragment.passLanguage() == "img_en") {
+                LocaleHelper.setLocale(getContext(), "img_en");
             }
         }
     }
@@ -69,6 +70,10 @@ public class RegisterFragment extends Fragment {
         mDialogButtonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("username", mName);
+                intent.putExtra("password", mPass);
+                getActivity().setResult(Activity.RESULT_OK, intent);
                 getActivity().finish();
             }
         });

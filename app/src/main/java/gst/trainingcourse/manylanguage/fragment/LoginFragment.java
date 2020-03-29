@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
+import gst.trainingcourse.manylanguage.MainActivity;
 import gst.trainingcourse.manylanguage.R;
 import gst.trainingcourse.manylanguage.RegisterActivity;
 import gst.trainingcourse.manylanguage.lib_Helper.LocaleHelper;
@@ -34,14 +36,14 @@ public class LoginFragment extends Fragment {
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private TextView mTxtRegister;
-    private String mSetLanguage = "vi";
+    private String mSetLanguage = "img_vi";
+    private int REQUEST_USER_PASS = 999;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        return view;
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class LoginFragment extends Fragment {
             menuHelper = fMenuHelper.get(popupMenu);
             argTypes = new Class[]{boolean.class};
             menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         ///////////////////////////
 
@@ -77,12 +79,12 @@ public class LoginFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.itemMenuVi:
-                        changeLanguage("vi");
-                        mSetLanguage = "vi";
+                        changeLanguage("img_vi");
+                        mSetLanguage = "img_vi";
                         break;
                     case R.id.itemMenuEn:
-                        changeLanguage("en");
-                        mSetLanguage = "en";
+                        changeLanguage("img_en");
+                        mSetLanguage = "img_en";
                         break;
                 }
 
@@ -114,6 +116,9 @@ public class LoginFragment extends Fragment {
                     mEditor.putString("password", mPass);
                     mEditor.commit();
                 }
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 
@@ -135,7 +140,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_USER_PASS);
             }
         });
     }
@@ -143,16 +148,27 @@ public class LoginFragment extends Fragment {
     private void changeLanguage(String language) {
         LoginFragment loginFragment = (LoginFragment) getFragmentManager().findFragmentByTag("loginFragment");
         if (loginFragment != null) {
-            if (language == "vi") {
-                LocaleHelper.setLocale(getContext(), "vi");
-            } else if (language == "en") {
-                LocaleHelper.setLocale(getContext(), "en");
+            if (language == "img_vi") {
+                LocaleHelper.setLocale(getContext(), "img_vi");
+            } else if (language == "img_en") {
+                LocaleHelper.setLocale(getContext(), "img_en");
             }
             getFragmentManager().beginTransaction()
                     .detach(loginFragment)
                     .attach(loginFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_USER_PASS && resultCode == getActivity().RESULT_OK && data != null) {
+            mName = data.getStringExtra("username");
+            mPass = data.getStringExtra("password");
+            mEditTextName.setText(mName);
+            mEditTextPass.setText(mPass);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
