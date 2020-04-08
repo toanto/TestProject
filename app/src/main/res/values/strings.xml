@@ -15,13 +15,21 @@
     <string name="txt_register_here">Register here!</string>
     <string name="txt_ok">OK</string>
     <string name="txt_dang_ky_thanh_cong">Register Succesful!</string>
-    <string name="txt_check_null">Information is null</string>
-    <string name="txt_wrong_password">Wrong Password!</string>
     <string name="txt_profile">Profile</string>
     <string name="txt_favourite">Favourite</string>
     <string name="txt_home">Home</string>
+    <string name="txt_sort">Sort</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="txt_sort">Sắp Xếp</string>
+    <!--Start Toast notification-->
+    <string name="toast_account_already_exists">Account already exists</string>
+    <string name="toast_not_enough_information">You have not entered enough information</string>
+    <string name="toast_wrong_account_infomation">Wrong account information</string>
+    <string name="toast_check_null">Information is null</string>
+    <string name="toast_wrong_password">Wrong Password!</string>
+    <!--End Toast notification-->
+
+    <!--Start title tool bar-->
+    <string name="title_control_account">Control Account</string>
+    <string name="title_home">Home</string>
+    <!--End title tool bar-->
 </resources>

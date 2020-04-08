@@ -13,6 +13,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import gst.trainingcourse.manylanguage.fragment.FavouriteFragment;
 import gst.trainingcourse.manylanguage.fragment.HomeFragment;
@@ -37,14 +38,17 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.bottomHome:
                     setupFragment(mHomeFragment);
                     mToolbar.setTitle("Home");
+                    mToolbar.setVisibility(View.VISIBLE);
                     break;
                 case R.id.bottomFavourite:
                     setupFragment(mFavouriteFragment);
                     mToolbar.setTitle("Favourite");
+                    mToolbar.setVisibility(View.VISIBLE);
                     break;
                 case R.id.bottomProfile:
                     setupFragment(mProfileFragment);
-                    mToolbar.setTitle("Profile");
+//                    mToolbar.setTitle("Profile");
+                    mToolbar.setVisibility(View.GONE);
                     break;
             }
             return true;
@@ -78,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem menuItem = menu.findItem(R.id.search);
         mSearchView = (SearchView) menuItem.getActionView();
+        mSearchView.setQueryHint("Nhap tu khoa...");
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-
+                HomeFragment.mHomeAdapter.querySearch(s);
                 return false;
             }
         });

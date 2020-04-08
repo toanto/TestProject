@@ -1,5 +1,6 @@
 package gst.trainingcourse.manylanguage.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +20,19 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
+import gst.trainingcourse.manylanguage.ControlAccount;
 import gst.trainingcourse.manylanguage.MainActivity;
 import gst.trainingcourse.manylanguage.R;
 import gst.trainingcourse.manylanguage.RegisterActivity;
+import gst.trainingcourse.manylanguage.database.MyDatabase;
 import gst.trainingcourse.manylanguage.lib_Helper.LocaleHelper;
+import gst.trainingcourse.manylanguage.model.Account;
 
 public class LoginFragment extends Fragment {
 
@@ -35,9 +43,12 @@ public class LoginFragment extends Fragment {
     private RelativeLayout mRlChooseLanguage;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
-    private TextView mTxtRegister;
+    private TextView mTxtRegister, mTxtAppName;
     private String mSetLanguage = "img_vi";
     private int REQUEST_USER_PASS = 999;
+    private Account mAccount;
+    private MyDatabase mMyDatabase;
+//    private List<Account> mAccountList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -99,6 +110,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void initAction() {
+        mMyDatabase = new MyDatabase(getContext());
+//        mAccountList = mMyDatabase.getAllAccount();
+
         mRlChooseLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,9 +130,25 @@ public class LoginFragment extends Fragment {
                     mEditor.putString("password", mPass);
                     mEditor.commit();
                 }
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                if (mName.matches("") || mPass.matches("")) {
+                    Toast.makeText(getContext(), getString(R.string.toast_not_enough_information), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (mName.matches("admin") && mPass.matches("123")) {
+                        Intent intent = new Intent(getActivity(), ControlAccount.class);
+                        startActivity(intent);
+                    } else {
+                        boolean check = mMyDatabase.checkAccountLogin(mName, mPass);
+                        if (check) {
+                            int id = mMyDatabase.getId(mName);
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.putExtra("idAccount", id);
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else {
+                            Toast.makeText(getContext(), getString(R.string.toast_wrong_account_infomation), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             }
         });
 
@@ -139,8 +169,15 @@ public class LoginFragment extends Fragment {
         mTxtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Pair[] pairs = new Pair[4];
+                pairs[0] = new Pair(mTxtAppName, getResources().getString(R.string.app_name));
+                pairs[1] = new Pair(mEditTextName, getResources().getString(R.string.txt_username));
+                pairs[2] = new Pair(mEditTextPass, getResources().getString(R.string.txt_password));
+                pairs[3] = new Pair(mEditTextPhone, getResources().getString(R.string.txt_confirm_password));
+
                 Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                startActivityForResult(intent, REQUEST_USER_PASS);
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs);
+                startActivityForResult(intent, REQUEST_USER_PASS, activityOptions.toBundle());
             }
         });
     }
@@ -197,10 +234,11 @@ public class LoginFragment extends Fragment {
         mCheckBox = view.findViewById(R.id.checkBoxInfo);
         mRlChooseLanguage = view.findViewById(R.id.rlChooseLanguage);
         mTxtRegister = view.findViewById(R.id.txtRegister);
+        mTxtAppName = view.findViewById(R.id.txtAppName);
 
         mCheckBox.setChecked(mSharedPreferences.getBoolean("checkBoxInfo", false));
 
         mEditTextName.setText(mSharedPreferences.getString("username", null));
-        mEditTextPass.setText(mSharedPreferences.getString("passwork", null));
+        mEditTextPass.setText(mSharedPreferences.getString("password", null));
     }
 }
